@@ -1,17 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
 
+  const [nome, setNome] = useState("");
+  const [lista, setLista] = useState([]);
+
+  const adicionarNome = () => {
+    if (nome.trim() === "") return;
+
+    setLista([...lista, nome]);
+    setNome("");
+  };
+
+  const removerNome = (index) => {
+    const novaLista = lista.filter((_, i) => i !== index);
+    setLista(novaLista);
+  };
+
+  
   return (
-    <>
-   ola mundo! bigode esta atacando com o bumbum! cuidado!!
+    <div>
+      <h2>Lista Dinâmica</h2>
 
-    </>
-  )
+      <input
+        type="text"
+        placeholder="Digite um nome"
+        value={nome}
+        onChange={(e) => setNome(e.target.value)}
+      />
+
+      <button onClick={adicionarNome}>Adicionar</button>
+
+      <ul>
+        {lista.map((item, index) => (
+          <li key={index}>
+            {item}
+            <button onClick={() => removerNome(index)}>
+              Remover
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
-export default App
+export default App;
